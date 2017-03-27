@@ -1,0 +1,15 @@
+# Java class files
+*.class
+
+# Generated files
+out/
+
+# Local configuration file (sdk path, etc)
+local.properties
+
+# Log Files
+*.log
+
+# Intellij
+*.iml
+.idea/workspace.xml
