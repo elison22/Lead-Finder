@@ -2,6 +2,7 @@ package experiments;
 
 import org.familysearch.api.client.ft.FamilySearchFamilyTree;
 import org.familysearch.api.client.ft.FamilyTreePersonState;
+import org.gedcomx.rs.client.PersonState;
 
 import java.io.FileInputStream;
 import java.io.IOException;
@@ -24,8 +25,11 @@ public class TreeReader {
                         props.getProperty("dev_key")
                 );
 
-        FamilyTreePersonState person = ft.readPersonById("id");
-        System.out.println(person.toString());
+        PersonState currentPerson = ft.readPersonForCurrentUser();
+        System.out.println(currentPerson.toString());
+
+        FamilyTreePersonState otherPerson = ft.readPersonById("id");
+        System.out.println(otherPerson.toString());
 
     }
 
