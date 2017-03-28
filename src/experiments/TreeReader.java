@@ -15,15 +15,21 @@ public class TreeReader {
         Properties props = new Properties();
         props.load(new FileInputStream("local.properties"));
 
-        System.out.println(props.getProperty("username"));
+        boolean useSandbox = Boolean.valueOf(props.getProperty("use_sandbox"));
+        String devKey = props.getProperty("dev_key");
+        String username;
+        String password;
 
-        FamilySearchFamilyTree ft = new FamilySearchFamilyTree(Boolean.getBoolean(props.getProperty("use_sandbox")))
-                //and authenticate.
-                .authenticateViaOAuth2Password(
-                        props.getProperty("username"),
-                        props.getProperty("password"),
-                        props.getProperty("dev_key")
-                );
+        if(useSandbox) {
+            username = props.getProperty("sand_username");
+            password = props.getProperty("sand_password");
+        } else {
+            username = props.getProperty("prod_username");
+            password = props.getProperty("prod_password");
+        }
+
+        FamilySearchFamilyTree ft = new FamilySearchFamilyTree(useSandbox)
+                .authenticateViaOAuth2Password(username, password, devKey).ifSuccessful();
 
         PersonState currentPerson = ft.readPersonForCurrentUser();
         System.out.println(currentPerson.toString());
